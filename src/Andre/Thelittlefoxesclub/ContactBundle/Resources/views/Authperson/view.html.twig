@@ -1,0 +1,68 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{% block navButtons %}
+    {% if is_granted('EDIT', authperson) %}
+        {{ UI.editButton({
+            'path' : path('contact.authperson_update', { id: authperson.id }),
+            'entity_label': 'authperson'|trans
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', authperson) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('contact_api_delete_authperson', {'id': authperson.id}),
+            'dataRedirect': path('contact.authperson_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-authperson',
+            'dataId': authperson.id,
+            'entity_label': 'authperson'|trans,
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      authperson,
+        'indexPath':   path('contact.authperson_index'),
+        'indexLabel': 'authpersons'|trans,
+        'entityTitle': authperson.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('First Name'|trans, authperson.name) }}
+                    
+                     {% set customer_name_link %}
+                <a href="{{ path('oro_account_view', {id: authperson.accountId.id}) }}">
+                    {{ authperson.accountId.name }}
+                </a>
+            {% endset %}
+
+            {{ UI.renderHtmlProperty('Parent'|trans, customer_name_link) }}
+
+                    
+                    
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'Data'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        }
+    ] %}
+
+    {% set id = 'authpersonView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

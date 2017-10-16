@@ -1,0 +1,482 @@
+datagrids:
+    vehicles-grid:
+        source:
+            acl_resource: contact.vehicle_view
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - v.model
+                    - v.seats
+                    - v.boughtAt
+                    - v.leasedUntil
+                from:
+                    - { table: ContactBundle:Vehicle, alias: v }
+        columns:
+            model:
+                label: Model
+            seats:
+                label: '# Seats'
+            boughtAt:
+                label: Bought at
+                frontend_type: date
+            leasedUntil:
+                label: Leased until
+                frontend_type: date
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: contact.vehicle_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: contact.vehicle_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: contact_api_delete_vehicle
+                params:
+                    - id
+        sorters:
+            columns:
+                model:
+                    data_name: v.model
+                seats:
+                    data_name: v.seats
+                boughtAt:
+                    data_name: v.boughtAt
+                leasedUntil:
+                    data_name: v.leasedUntil
+            default:
+                model: ASC
+        filters:
+            columns:
+                model:
+                    type: string
+                    data_name: v.model
+                seats:
+                    type: number
+                    data_name: v.seats
+                boughtAt:
+                    type: date
+                    data_name: v.boughtAt
+                leasedUntil:
+                    type: date
+                    data_name: v.leasedUntil
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  contact.vehicle_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  contact.vehicle_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  contact.vehicle_delete
+    children-grid:
+        source:
+            acl_resource: contact.children_view
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - picture.firstName as IID
+                    - v.firstName
+                    - v.lastName
+                    - v.gender
+                    - v.dob
+                from:
+                    - { table: ContactBundle:Children, alias: v }
+                join:
+                    left:
+                        - { join: v.parentId, alias: picture }
+        columns:
+            IID:
+                label: 'Magento (Parent)'
+            firstName:
+                label: 'First Name'
+            lastName:
+                label: 'Last Name'
+            gender:
+                label: 'Gender'
+            dob:
+                label: 'DOB'
+                frontend_type: date
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: contact.children_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: contact.children_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: contact_api_delete_children
+                params:
+                    - id
+        sorters:
+            columns:
+                firstName:
+                    data_name: v.firstName
+            default:
+                firstName: ASC
+        filters:
+            columns:
+                firstName:
+                    type: string
+                    data_name: v.firstName
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  contact.children_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  contact.children_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  contact.children_delete
+    authperson-grid:
+        source:
+            acl_resource: contact.authperson_view
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - acct.name as accountName
+                    - v.name
+                from:
+                    - { table: ContactBundle:Authperson, alias: v }
+                join:
+                    left:
+                        - { join: v.accountId, alias: acct }
+
+        columns:
+            accountName:
+                label: 'Account Name'
+            name:
+                label: 'First Name'
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: contact.authperson_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: contact.authperson_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: contact_api_delete_authperson
+                params:
+                    - id
+        sorters:
+            columns:
+                name:
+                    data_name: v.name
+            default:
+                name: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: v.name
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  contact.authperson_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  contact.authperson_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  contact.authperson_delete
+    weekly-grid:
+        source:
+            acl_resource: contact.weekly_view
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - v.name
+                    - v.csku
+                    - v.cday
+                    - v.ctime
+                    - v.cduration
+                    - v.cgender
+                    - v.cagegroup
+                    - v.csport
+                    - count(picture) as noofclass 
+                    - v.carea 
+                    - v.cvenue
+                from:
+                    - { table: ContactBundle:Weekly, alias: v }
+                join:
+                    left:
+                        - { join: v.children, alias: picture }
+        columns:
+            name:
+                label: 'Name'
+            csku:
+                label: 'Course ID'
+            cday:
+                label: 'Day'
+            ctime:
+                label: 'Time'
+            cduration:
+                label: 'Duration'
+            cgender:
+                label: 'Gender'
+            cagegroup:
+                label: 'Age Group'
+            csport:
+                label: 'Sport'
+            noofclass:
+                label: 'No. of class'
+            area:
+                label: 'Area'
+            venue:
+                label: 'Venue'
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: contact.weekly_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: contact.weekly_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: contact_api_delete_weekly
+                params:
+                    - id
+        sorters:
+            columns:
+                name:
+                    data_name: v.name
+            default:
+                name: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: v.name
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  contact.weekly_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  contact.weekly_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  contact.weekly_delete
+    holiday-grid:
+        source:
+            acl_resource: contact.holiday_view
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - v.name
+                from:
+                    - { table: ContactBundle:Holiday, alias: v }
+        columns:
+            name:
+                label: 'First Name'
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: contact.holiday_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: contact.holiday_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: contact_api_delete_holiday
+                params:
+                    - id
+        sorters:
+            columns:
+                name:
+                    data_name: v.name
+            default:
+                name: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: v.name
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  contact.holiday_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  contact.holiday_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  contact.holiday_delete
+    master-grid:
+        source:
+            acl_resource: contact.master_view
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - v.name
+                from:
+                    - { table: ContactBundle:Master, alias: v }
+        columns:
+            name:
+                label: 'First Name'
+        properties:
+            id: ~
+            update_link:
+                type: url
+                route: contact.master_update
+                params:
+                    - id
+            view_link:
+                type: url
+                route: contact.master_view
+                params:
+                    - id
+            delete_link:
+                type: url
+                route: contact_api_delete_master
+                params:
+                    - id
+        sorters:
+            columns:
+                name:
+                    data_name: v.name
+            default:
+                name: ASC
+        filters:
+            columns:
+                name:
+                    type: string
+                    data_name: v.name
+        actions:
+            view:
+                type:          navigate
+                label:         View
+                link:          view_link
+                icon:          eye-open
+                acl_resource:  contact.master_view
+                rowAction:     true
+            update:
+                type:          navigate
+                label:         Update
+                link:          update_link
+                icon:          edit
+                acl_resource:  contact.master_update
+            delete:
+                type:          delete
+                label:         Delete
+                link:          delete_link
+                icon:          trash
+                acl_resource:  contact.master_delete
+    weeklyjchildren-grid:
+        source:
+            type: orm
+            query_builder: '@contact.weekly.repository->findByCustomerId'
+            bind_parameters:
+                contactId: relatedContactId
+        columns:
+            id:
+                label: "ID"
+            name:
+                label: "Child Name"
+    temp-grid:
+        source:
+            type: orm
+            query:
+                select:
+                    - v.id
+                    - picture.name as name                    
+                from:
+                    - { table: ContactBundle:Weeklyjchildren, alias: v }
+                where:
+                    and:
+                        - v.weeklyId = :contactId
+                join:
+                    left:
+                        - { join: v.accountId, alias: picture }
+            bind_parameters:
+                contactId: relatedContactId
+        columns:
+            id:
+                label: "ID"
+            name:
+                label: "Child Name"

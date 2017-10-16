@@ -1,0 +1,31 @@
+services:
+    contact.vehicle_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - Andre\Thelittlefoxesclub\ContactBundle\Entity\Vehicle
+            - "@doctrine.orm.entity_manager"
+    contact.children_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - Andre\Thelittlefoxesclub\ContactBundle\Entity\Children
+            - "@doctrine.orm.entity_manager"
+    contact.spouse_manager.api:
+        class: Oro\Bundle\SoapBundle\Entity\Manager\ApiEntityManager
+        parent: oro_soap.manager.entity_manager.abstract
+        arguments:
+            - Andre\Thelittlefoxesclub\ContactBundle\Entity\Spouse
+            - "@doctrine.orm.entity_manager"
+#    contact.event_listener.weeklyjchildren_grid:
+#        class: Andre\Thelittlefoxesclub\ContactBundle\EventListener\ParameterListener
+#        arguments:
+#            - contactId
+#        tags:
+#            - { name: kernel.event_listener, event: oro_datagrid.datagrid.build.after, method: onBuildAfter }
+
+    contact.weekly.repository:
+        class: Andre\Thelittlefoxesclub\ContactBundle\Repository\WeeklyjchildrenRepository
+        parent: oro_entity.abstract_repository
+        arguments:
+            - 'Andre\Thelittlefoxesclub\ContactBundle\Entity\Weeklyjchildren'

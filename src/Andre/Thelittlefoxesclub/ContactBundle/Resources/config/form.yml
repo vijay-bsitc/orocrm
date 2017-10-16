@@ -1,0 +1,21 @@
+services:
+    contact.form.type.vehicle:
+        class: Andre\Thelittlefoxesclub\ContactBundle\Form\Type\VehicleType 
+        tags:
+            - { name: form.type, alias: contact_vehicle }
+    contact.form.type.children:
+        class: Andre\Thelittlefoxesclub\ContactBundle\Form\Type\ChildrenType 
+        tags:
+            - { name: form.type, alias: contact_children }
+    contact.form.type.spouse:
+        class: Andre\Thelittlefoxesclub\ContactBundle\Form\Type\SpouseType 
+        tags:
+            - { name: form.type, alias: contact_spouse }
+    contact.form.type.authperson:
+        class: Andre\Thelittlefoxesclub\ContactBundle\Form\Type\AuthpersonType 
+        tags:
+            - { name: form.type, alias: contact_authperson }
+    contact.form.type.weekly:
+        class: Andre\Thelittlefoxesclub\ContactBundle\Form\Type\WeeklyType 
+        tags:
+            - { name: form.type, alias: contact_weekly }

@@ -1,0 +1,36 @@
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+<div class="widget-content">
+<br />
+  <table class="grid table-hover table table-bordered table-condensed">
+   <thead class="grid-header">
+      <tr class="grid-header-row">
+         <th class="grid-cell grid-header-cell grid-header-cell-incrementId sortable renderable descending shortenable-label string-cell"><a class="grid-header-cell__link" href="#"><span class="grid-header-cell__label" style="" data-original-title="" title="">Order #</span><span class="caret"></span></a></th>
+         <th class="grid-cell grid-header-cell grid-header-cell-itemsCount sortable renderable shortenable-label number-cell"><a class="grid-header-cell__link" href="#"><span class="grid-header-cell__label" style="" data-original-title="" title="">Items qty</span><span class="caret"></span></a></th>
+      </tr>
+   </thead>
+   <tfoot class="grid-footer"></tfoot>
+   <tbody class="grid-body">
+   {% for d in children %}
+
+      <tr class="grid-row row-click-action">
+         <td class="string-cell grid-cell grid-body-cell grid-body-cell-incrementId">d</td>
+         
+         <td class="action-cell grid-cell grid-body-cell">
+            <div class="more-bar-holder action-row">
+               <ul class="nav nav-pills icons-holder launchers-list">
+                  <li class="launcher-item"><a href="/app_dev.php/magento/order/view/27" class="action
+                     no-hash
+                     mode-icon-only
+                     " title="View">
+                     <i class="fa-eye hide-text"></i>
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </td>
+      </tr>
+       {% endfor %}
+   </tbody>
+</table>
+</div>

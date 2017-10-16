@@ -1,0 +1,70 @@
+oro_account_bundlessss:
+    resource:     "@ContactBundle/Controller/AccountController.php"
+    type:         annotation
+    prefix:       /account
+
+
+default_bundle:
+    resource: "@ContactBundle/Controller/DefaultController.php"
+    type: annotation
+    prefix: /technoscore
+
+authperson_bundle:
+    resource: "@ContactBundle/Controller/AuthpersonController.php"
+    type: annotation
+    prefix: /techno/auth
+
+weekly_bundle:
+    resource: "@ContactBundle/Controller/WeeklyController.php"
+    type: annotation
+    prefix: /techno
+
+master_bundle:
+    resource: "@ContactBundle/Controller/MasterController.php"
+    type: annotation
+    prefix: /techno
+
+holiday_bundle:
+    resource: "@ContactBundle/Controller/HolidayController.php"
+    type: annotation
+    prefix: /techno
+
+authperson_api_vehicle:
+    resource:     "@ContactBundle/Controller/Api/Rest/AuthpersonController.php"
+    type:         rest
+    prefix:       api/rest/{version}/
+    requirements:
+        version:  latest|v1
+        _format:  json
+    defaults:
+        version:  latest
+
+weekly_api_vehicle:
+    resource:     "@ContactBundle/Controller/Api/Rest/WeeklyController.php"
+    type:         rest
+    prefix:       api/rest/{version}/
+    requirements:
+        version:  latest|v1
+        _format:  json
+    defaults:
+        version:  latest
+
+holiday_api_vehicle:
+    resource:     "@ContactBundle/Controller/Api/Rest/HolidayController.php"
+    type:         rest
+    prefix:       api/rest/{version}/
+    requirements:
+        version:  latest|v1
+        _format:  json
+    defaults:
+        version:  latest
+
+master_api_vehicle:
+    resource:     "@ContactBundle/Controller/Api/Rest/MasterController.php"
+    type:         rest
+    prefix:       api/rest/{version}/
+    requirements:
+        version:  latest|v1
+        _format:  json
+    defaults:
+        version:  latest

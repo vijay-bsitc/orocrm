@@ -1,0 +1,37 @@
+navigation:
+    menu_config:
+        items:
+            contact2_tab:
+                label: Acme label
+                uri:   '#'
+                extras:
+                    position: 300
+            contact2_tab_link:
+                label: Authorised Collectors
+                route: contact.authperson_index
+            class_management:
+                label: Class Management
+                uri:   '#'
+                extras:
+                    position: 300
+            weekly_management:
+                label: Weekly
+                route: contact.weekly_index
+            holiday_management:
+                label: Holiday
+                route: contact.holiday_index
+            master_management:
+                label: Master
+                route: contact.master_index
+
+        tree:
+            application_menu:
+                children:
+                    class_management:
+                        children:
+                            weekly_management: ~
+                            holiday_management: ~
+                            master_management: ~
+
+    titles:
+        contact2: Authorised Collectors

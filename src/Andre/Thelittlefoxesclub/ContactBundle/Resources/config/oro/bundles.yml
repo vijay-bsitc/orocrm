@@ -1,0 +1,2 @@
+bundles:
+    - { name: Andre\Thelittlefoxesclub\ContactBundle\ContactBundle, priority: 210 }

@@ -25,7 +25,8 @@
         "oro/crm-magento-embedded-contact-us": "2.3.*",
         "oro/crm-mail-chimp": "2.3.*",
         "oro/crm-dotmailer": "2.3.*",
-        "oro/crm-zendesk": "2.3.*"
+        "oro/crm-zendesk": "2.3.*",
+        "oro/redis-config" : "2.0.0-beta.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "3.1.2",

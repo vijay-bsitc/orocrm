@@ -1,0 +1,57 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+{% block navButtons %}
+    {% if is_granted('EDIT', master) %}
+        {{ UI.editButton({
+            'path' : path('contact.master_update', { id: master.id }),
+            'entity_label': 'master'|trans
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', master) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('contact_api_delete_master', {'id': master.id}),
+            'dataRedirect': path('contact.master_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-master',
+            'dataId': master.id,
+            'entity_label': 'master'|trans,
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      master,
+        'indexPath':   path('contact.master_index'),
+        'indexLabel': 'masters'|trans,
+        'entityTitle': master.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+        <div class="widget-content">
+            <div class="row-fluid form-horizontal">
+                <div class="responsive-block">
+                    {{ UI.renderProperty('First Name'|trans, master.name) }}
+                </div>
+            </div>
+        </div>
+    {% endset %}
+    {% set dataBlocks = [
+        {
+            'title': 'Data'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        }
+    ] %}
+
+    {% set id = 'masterView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}

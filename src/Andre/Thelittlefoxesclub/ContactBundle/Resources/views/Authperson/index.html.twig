@@ -1,0 +1,14 @@
+{% extends 'OroUIBundle:actions:index.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+{% set pageTitle = 'Authperson'|trans %}
+
+{% block navButtons %}
+    {% if is_granted('contact.authperson_create') %}
+        <div class="btn-group">
+            {{ UI.addButton({
+            'path': path('contact.authperson_create'),
+            'entity_label': 'Authperson'|trans
+            }) }}
+        </div>
+    {% endif %}
+{% endblock %}

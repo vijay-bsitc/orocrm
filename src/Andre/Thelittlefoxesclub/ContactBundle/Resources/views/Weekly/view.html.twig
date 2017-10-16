@@ -1,0 +1,125 @@
+{% extends 'OroUIBundle:actions:view.html.twig' %}
+{% import 'OroUIBundle::macros.html.twig' as UI %}
+
+
+{% import 'OroDataGridBundle::macros.html.twig' as dataGrid %}
+
+
+
+{% set fullname = entity|oro_format_name|default('N/A'|trans) %}
+{% oro_title_set({params : {"%customer.name%": fullname} }) %}
+
+{% block navButtons %}
+
+    {% if is_granted('EDIT', weekly) %}
+        {{ UI.editButton({
+            'path' : path('contact.weekly_update', { id: weekly.id }),
+            'entity_label': 'weekly'|trans
+        }) }}
+    {% endif %}
+
+    {% if is_granted('DELETE', weekly) %}
+        {{ UI.deleteButton({
+            'dataUrl': path('contact_api_delete_weekly', {'id': weekly.id}),
+            'dataRedirect': path('contact.weekly_index'),
+            'aCss': 'no-hash remove-button',
+            'id': 'btn-remove-weekly',
+            'dataId': weekly.id,
+            'entity_label': 'weekly'|trans,
+        }) }}
+    {% endif %}
+{% endblock navButtons %}
+
+{% block pageHeader %}
+    {% set breadcrumbs = {
+        'entity':      weekly,
+        'indexPath':   path('contact.weekly_index'),
+        'indexLabel': 'weekly'|trans,
+        'entityTitle': weekly.name
+    } %}
+    {{ parent() }}
+{% endblock pageHeader %}
+
+{% block content_data %}
+    {% set data %}
+     <div class="row-fluid form-horizontal">
+            <div class="responsive-block">
+                    {{ UI.renderProperty('Class ID'|trans, weekly.csku) }}
+                    {{ UI.renderProperty('Term'|trans, weekly.cterm) }}
+                    {{ UI.renderProperty('Area'|trans, weekly.carea) }}
+                    {{ UI.renderProperty('Venue'|trans, weekly.cvenue) }}
+                    {{ UI.renderProperty('Age Group'|trans, weekly.cagegroup) }}
+                    {{ UI.renderProperty('Sport'|trans, weekly.csport) }}
+                    {{ UI.renderProperty('Gender'|trans, weekly.cgender) }}
+                    {{ UI.renderProperty('Status'|trans, weekly.cactive) }}
+                    {{ UI.renderProperty('Type'|trans, weekly.ctype) }}
+                    {{ UI.renderProperty('Day'|trans, weekly.cday) }}
+                    {{ UI.renderProperty('Time'|trans, weekly.ctime) }}
+                    {{ UI.renderProperty('Duration'|trans, weekly.cstarttime ~" - "~weekly.cendtime) }}
+                    {{ UI.renderProperty('Number of Weeks'|trans, weekly.cduration) }}
+                    {{ UI.renderProperty('Start Date'|trans, weekly.cstartdate|date('d M Y', oro_timezone())) }}
+            </div>
+            <div class="responsive-block">
+                   {{weekly.ciframeHtml|raw}}
+            </div>
+       </div>
+       
+    {% endset %}
+    {% set data2 %}
+      <div class="widget-content">
+          {{ dataGrid.renderGrid('weeklyjchildren-grid',{relatedContactId: 1}) }}
+      </div>       
+    {% endset %}
+
+     {% set salesTabsWidget %}
+        <div class="responsive-cell customer-without-border-tabs">
+
+        {% set tabs = [] %}
+{% for i in 1..weekly.cduration %}
+   {% set tabs = tabs|merge([
+                {
+                    'alias':'helloworld'~i,
+                    'widgetType': 'block',
+                    'label': "Week "~i|trans,
+                    'url': path(
+                            'contact.widget.tab',{'name': 'shanky12'}
+                    )
+                }
+            ]) %}
+{% endfor %}
+
+
+            
+            {{ tabPanel(tabs) }}
+        </div>
+    {% endset %}
+
+
+
+    {% set dataBlocks = [
+        {
+            'title': 'Class Overview'|trans,
+            'class': 'active',
+            'subblocks': [
+                { 'data' : [data] }
+            ]
+        },
+        {
+            'title': 'Class Activity'|trans,
+            'subblocks': [
+                { 'data' : [data2] }
+            ]
+        }
+        ,
+        {
+            'title': 'Class Details'|trans,
+            'subblocks': [
+                { 'data' : [salesTabsWidget] }
+            ]
+        }
+    ] %}
+
+    {% set id = 'weeklyView' %}
+    {% set data = { 'dataBlocks': dataBlocks } %}
+    {{ parent() }}
+{% endblock content_data %}
